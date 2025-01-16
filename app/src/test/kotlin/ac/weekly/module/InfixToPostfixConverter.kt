@@ -1,6 +1,6 @@
 package ac.weekly.module
 
-import ac.weekly.model.BasicOperator
+import ac.weekly.operation.BasicOperator
 
 /**
  * @author Theo
@@ -46,10 +46,4 @@ class InfixToPostfixConverter {
     }
 
     private fun trim(expression: String): String = expression.replace(Regex("\\s+"), "")
-}
-
-fun main() {
-    val infixToPostfixConverter = InfixToPostfixConverter()
-    println(infixToPostfixConverter.convert("1 + 2"))
-    println(infixToPostfixConverter.convert("1 - 5 + 2 * 2"))
 }

@@ -1,7 +1,7 @@
 package ac.weekly.module
 
-import ac.weekly.model.BasicOperator
-import ac.weekly.model.Operation
+import ac.weekly.operation.BasicOperator
+import ac.weekly.operation.Operation
 
 /**
  * @author Theo

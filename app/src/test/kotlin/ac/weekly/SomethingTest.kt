@@ -1,9 +1,9 @@
 package ac.weekly
 
-import ac.weekly.model.BasicOperator
-import ac.weekly.model.KeypadNumber
 import ac.weekly.module.InfixToPostfixConverter
 import ac.weekly.module.PostfixCalculator
+import ac.weekly.operation.BasicOperator
+import ac.weekly.ui.KeypadNumber
 import strikt.api.expectThat
 import strikt.api.expectThrows
 import strikt.assertions.isEqualTo

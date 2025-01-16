@@ -1,4 +1,4 @@
-package ac.weekly.model
+package ac.weekly.ui
 
 /**
  * @author Theo
