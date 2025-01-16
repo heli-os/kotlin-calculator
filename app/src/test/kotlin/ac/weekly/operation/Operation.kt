@@ -31,6 +31,8 @@ sealed class Operation {
         ): Long = left * right
     }
 
+    // TODO Division Long 타입으로 처리하고 있는 부분 수정 필요
+    
     data object Division : Operation() {
         override fun execute(
             left: Long,
