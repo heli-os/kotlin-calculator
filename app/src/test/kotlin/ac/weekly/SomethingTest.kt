@@ -2,6 +2,8 @@ package ac.weekly
 
 import ac.weekly.model.BasicOperator
 import ac.weekly.model.KeypadNumber
+import ac.weekly.module.InfixToPostfixConverter
+import ac.weekly.module.PostfixCalculator
 import strikt.api.expectThat
 import strikt.api.expectThrows
 import strikt.assertions.isEqualTo
@@ -49,7 +51,7 @@ class SomethingTest {
 
     @Test
     fun `기본 연산자는 4개가 제공된다 덧셈 뺄셈 곱셈 나눗셈`() {
-        expectThat(BasicOperator::class.nestedClasses).and {
+        expectThat(BasicOperator::class.sealedSubclasses).and {
             get { size } isEqualTo 4
             // TODO 4개가 구체적으로 어떤게 제공되는지 테스트 코드 추가
         }
@@ -80,23 +82,33 @@ class SomethingTest {
     }
 
     @Test
-    fun `1+1=2`() {
+    fun `11+=2`() {
+        val result = PostfixCalculator().calculate("11+")
+        expectThat(result) isEqualTo 2L
     }
 
     @Test
-    fun `3-2=1`() {
+    fun `32-=1`() {
+        val result = PostfixCalculator().calculate("32-")
+        expectThat(result) isEqualTo 1L
     }
 
     @Test
-    fun `3*2=6`() {
+    fun `32*=6`() {
+        val result = PostfixCalculator().calculate("32*")
+        expectThat(result) isEqualTo 6L
     }
 
     @Test
-    fun `9-1*6=3`() {
+    fun `91-6*=48`() {
+        val result = PostfixCalculator().calculate("91-6*")
+        expectThat(result) isEqualTo 48L
     }
 
     @Test
-    fun `5+3-2*4=0`() {
+    fun `53+2-4*=24`() {
+        val result = PostfixCalculator().calculate("53+2-4*")
+        expectThat(result) isEqualTo 24L
     }
 
     @Test
@@ -107,11 +119,34 @@ class SomethingTest {
     fun `이전 결과를 기억해놓고 있다가 이어서 연산을 수행 할 수 있다`() {
     }
 
+    @Test
+    fun `1 - 5 + 2 * 2 = 15-2+2*`() {
+        val infixToPostfixConverter = InfixToPostfixConverter()
+        val result = infixToPostfixConverter.convert("1 - 5 + 2 * 2")
+        expectThat(result) isEqualTo "15-2+2*"
+    }
+
+    @Test
+    fun `1 + 2 = 12+`() {
+        val infixToPostfixConverter = InfixToPostfixConverter()
+        val result = infixToPostfixConverter.convert("1 + 2")
+        expectThat(result) isEqualTo "12+"
+    }
+
     /**
      * 1. Stack 기반 후위 표기식 -> 전통 방식으로 우선 작업
      * 2. 간단한 상태 머신
      * 3. top->down 하향 재귀 방식
      * 4. 중위 표기법 기반으로된 알고리즘: Shunting Yard
      * 5. 정규표현식 기반 계산 방식
+     *
+     *
+     * TODO
+     *  1. 중위표기식으로 입력한 계산식을 후위표기식으로 변경하는 기능
+     *    1-1. 연산 우선순위 고려
+     *    1-2. 괄호 처리
+     *  2. 특수 연산자: sqrt
+     *  3. 이전 결과 기억
+     *
      */
 }
